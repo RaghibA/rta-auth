@@ -17,10 +17,10 @@ jobs:
       - name: Create Kubernetes Secrets
         run: |
           kubectl create secret generic rta-auth-secret \
-            --from-literal=POSTGRES_USER=${{ secrets.POSTGRES_USER }} \
-            --from-literal=POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
-            --from-literal=POSTGRES_DB=${{ secrets.POSTGRES_DB }} \
-            --from-literal=POSTGRES_PORT=${{ secrets.POSTGRES_PORT }} \
+            --from-literal=DB_USER=${{ secrets.POSTGRES_USER }} \
+            --from-literal=DB_PASS=${{ secrets.POSTGRES_PASSWORD }} \
+            --from-literal=DB_NAME=${{ secrets.POSTGRES_DB }} \
+            --from-literal=DB_PORT=${{ secrets.POSTGRES_PORT }} \
             --from-literal=HOST=${{ secrets.AUTH_HOST}} \
             --from-literal=PORT=${{ secrets.AUTH_PORT}} \
             --from-literal=JWT_SECRET=${{ secrets.JWT_SECRET}} \
