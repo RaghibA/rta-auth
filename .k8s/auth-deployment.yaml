@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: analytics-auth
+  name: rta-auth
   namespace: real-time-analytics
 spec:
   progressDeadlineSeconds: 600
@@ -9,7 +9,7 @@ spec:
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      app: analytics-auth
+      app: rta-auth
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -18,12 +18,12 @@ spec:
   template:
     metadata:
       labels:
-        app: analytics-auth
+        app: rta-auth
     spec:
       containers:
-      - image: ghcr.io/raghiba/analytics-auth:latest
+      - image: ghcr.io/raghiba/rta-auth:latest
         imagePullPolicy: Always
-        name: analytics-auth
+        name: rta-auth
         ports:
         - containerPort: 8080
           protocol: TCP
