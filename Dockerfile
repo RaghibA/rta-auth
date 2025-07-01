@@ -8,8 +8,6 @@ RUN go mod tidy
 
 COPY . .
 
-WORKDIR /app/services/auth
-
 ENV HOST=${HOST}
 ENV PORT=${PORT}
 ENV JWT_SECRET=${JWT_SECRET}
