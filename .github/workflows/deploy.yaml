@@ -27,6 +27,6 @@ jobs:
             -n real-time-analytics --dry-run=client -o yaml | kubectl apply -f -
       - name: Apply Kubernetes Manifests
         run: |
-          kubectl apply -f .k8s/admin/deployment.yaml -n real-time-analytics
-          kubectl apply -f .k8s/admin/service.yaml -n real-time-analytics
-          kubectl apply -f .k8s/admin/ingress.yaml -n real-time-analytics
+          kubectl apply -f .k8s/auth-deployment.yaml -n real-time-analytics
+          kubectl apply -f .k8s/auth-service.yaml -n real-time-analytics
+          kubectl apply -f .k8s/auth-ingress.yaml -n real-time-analytics
