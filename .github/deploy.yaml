@@ -1,0 +1,33 @@
+name: Deploy Auth
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup kubectl and deploy
+        uses: tale/kubectl-action@v1
+        with:
+          base64-kube-config: ${{ secrets.KUBECONFIG_SECRET }}
+
+      - name: Create Kubernetes Secret for Postgres
+        run: |
+          kubectl create secret generic admin-secret \
+            --from-literal=POSTGRES_USER=${{ secrets.POSTGRES_USER }} \
+            --from-literal=POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
+            --from-literal=POSTGRES_DB=${{ secrets.POSTGRES_DB }} \
+            --from-literal=POSTGRES_PORT=${{ secrets.POSTGRES_PORT }} \
+            --from-literal=HOST=${{ secrets.AUTH_HOST}} \
+            --from-literal=PORT=${{ secrets.AUTH_PORT}} \
+            --from-literal=JWT_SECRET=${{ secrets.JWT_SECRET}} \
+            -n reat-time-analytics --dry-run=client -o yaml | kubectl apply -f -
+
+      - name: Apply Kubernetes Manifests
+        run: |
+          kubectl apply -f .k8s/admin/deployment.yaml -n reat-time-analytics
+          kubectl apply -f .k8s/admin/service.yaml -n real-time-analytics
+          kubectl apply -f .k8s/admin/ingress.yaml -n real-time-analytics
