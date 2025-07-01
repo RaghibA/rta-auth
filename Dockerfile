@@ -14,6 +14,6 @@ ENV HOST=${HOST}
 ENV PORT=${PORT}
 ENV JWT_SECRET=${JWT_SECRET}
 
-RUN go build -o auth-service cmd/server/main.go
+RUN go build -o auth-service /cmd/server/main.go
 
 CMD ["./auth-service"]
